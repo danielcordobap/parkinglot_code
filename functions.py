@@ -217,3 +217,22 @@ def plot_pca_combined_biplot(df, pca, features, id_col='ID_F'):
     plt.legend(title="Clúster", bbox_to_anchor=(1.05, 1), loc='upper left')
     plt.tight_layout()
     plt.show();
+
+
+def expandir_presencia_carros(row):
+    # Generamos un rango desde la hora de inicio hasta la hora de fin
+    # Usamos 'h' para evitar el error de frecuencia en versiones nuevas
+    horas_rango = pd.date_range(
+        start=row['start'].floor('h'), 
+        end=row['end'].floor('h'), 
+        freq='h'
+    )
+    
+    intervalos = []
+    for h in horas_rango:
+        intervalos.append({
+            'Fecha': h.date(),
+            'Hora': h.hour,
+            'JOIN_ID': row['JOIN_ID']
+        })
+    return intervalos;
